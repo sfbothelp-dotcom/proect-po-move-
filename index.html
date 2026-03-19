@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Складне речення | Презентація</title>
+    <style>
+        :root {
+            --bg: #080808;
+            --accent: #ffcc00; 
+            --card: #151515;
+            --text: #ffffff;
+            --shadow: rgba(255, 204, 0, 0.3);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        
+        #intro {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            position: relative;
+            padding: 20px;
+        }
+
+        .shatter-container {
+            font-size: clamp(1.5rem, 8vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            border: 3px solid var(--accent);
+            padding: 20px 40px;
+            background: rgba(255, 204, 0, 0.05);
+            box-shadow: 0 0 15px var(--shadow);
+            transition: 0.3s;
+            max-width: 90%;
+        }
+
+        .shatter-container:hover {
+            box-shadow: 0 0 40px var(--accent);
+            background: rgba(255, 204, 0, 0.1);
+        }
+
+        .letter {
+            display: inline-block;
+            position: relative;
+            will-change: transform, opacity;
+        }
+
+        
+        #main-content {
+            display: none;
+            height: 100vh;
+            opacity: 0;
+            transition: 1s ease-in;
+            perspective: 1500px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide {
+            position: absolute;
+            width: 85%; 
+            max-width: 600px;
+            min-height: 300px;
+            background: var(--card);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #333;
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        
+        @media (min-width: 768px) {
+            .slide { width: 500px; height: 350px; }
+            .slide.prev { transform: translateX(-100%) translateZ(-400px) rotateY(35deg); opacity: 0.1; }
+            .slide.next { transform: translateX(100%) translateZ(-400px) rotateY(-35deg); opacity: 0.1; }
+        }
+
+        
+        @media (max-width: 767px) {
+            .slide.prev { transform: translateX(-50%) translateZ(-200px) scale(0.8); opacity: 0; }
+            .slide.next { transform: translateX(50%) translateZ(-200px) scale(0.8); opacity: 0; }
+            .controls { gap: 10px; width: 90%; }
+            .btn { flex: 1; text-align: center; padding: 10px 5px !important; font-size: 0.9rem !important; }
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateZ(0) scale(1);
+            border-color: var(--accent);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 0 20px var(--shadow);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        h2 { color: var(--accent); margin-top: 0; font-size: 1.5rem; }
+        p { line-height: 1.6; color: #ccc; }
+        .example { margin-top: 15px; padding: 12px; background: #000; border-left: 3px solid var(--accent); font-style: italic; font-size: 0.95rem; }
+
+        
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+
+        @keyframes fall {
+            to {
+                transform: translateY(120vh) rotate(var(--r)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro">
+        <div class="shatter-container" id="board" onclick="breakAndStart()">
+            </div>
+    </div>
+
+    <div id="main-content">
+        <div class="slider-wrapper">
+            <div class="slide">
+                <h2>Складне речення</h2>
+                <p>Речення, що складається з двох або більше частин, кожна з яких має свою граматичну основу.</p>
+                <div class="example">Сонце вже сіло, але небо ще залишалося світлим.</div>
+            </div>
+            <div class="slide">
+                <h2>Складносурядне (ССР)</h2>
+                <p>Частини рівноправні, з’єднані сурядними сполучниками (і, та, але, проте, або).</p>
+                <div class="example">Реве та стогне Дніпр широкий, сердитий вітер завива.</div>
+            </div>
+            <div class="slide">
+                <h2>Складнопідрядне (СПР)</h2>
+                <p>Складається з головної частини та підрядної, яка відповідає на питання.</p>
+                <div class="example">Люблю вчити програмування (чому?), бо це відкриває нові можливості.</div>
+            </div>
+            <div class="slide">
+                <h2>Безсполучникове (БСР)</h2>
+                <p>Частини з’єднуються лише змістом та інтонацією, без допомоги сполучників.</p>
+                <div class="example">Зійде сонце — почнеться новий день.</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="changeSlide(-1)">← Назад</button>
+            <button class="btn" onclick="changeSlide(1)">Вперед →</button>
+        </div>
+    </div>
+
+    <script>
+        const text = "Складне речення";
+        const board = document.getElementById('board');
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        
+        text.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char === " " ? "\u00A0" : char;
+            span.className = 'letter';
+            board.appendChild(span);
+        });
+
+        function breakAndStart() {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((l, i) => {
+                const randomRotate = (Math.random() - 0.5) * 1000;
+                l.style.setProperty('--r', `${randomRotate}deg`);
+                l.style.animation = `fall 1.2s ${i * 0.04}s forwards cubic-bezier(0.55, 0.05, 0.675, 0.19)`;
+            });
+
+            board.style.borderColor = "transparent";
+            board.style.boxShadow = "none";
+            board.style.background = "none";
+
+            setTimeout(() => {
+                document.getElementById('intro').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'flex';
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                    updateSlides();
+                }, 50);
+            }, 1400);
+        }
+
+        function changeSlide(dir) {
+            currentSlide = Math.max(0, Math.min(slides.length - 1, currentSlide + dir));
+            updateSlides();
+        }
+
+        function updateSlides() {
+            slides.forEach((s, i) => {
+                s.className = 'slide';
+                if (i === currentSlide) s.classList.add('active');
+                else if (i < currentSlide) s.classList.add('prev');
+                else s.classList.add('next');
+            });
+        }
+    </script>
+</body>
+      </html>
+      
